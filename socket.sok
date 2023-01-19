@@ -1,0 +1,51 @@
+<style>
+
+    sok{
+    color: black;
+    display: none;
+    }
+
+    sok:before{
+    content: "->";
+    color: red;
+    font-weight: bold;
+    }
+
+    sok:after{
+    content: ">";
+    color: red;
+    font-weight: bold;
+}
+
+</style>
+<?php
+
+    function _var($_variable_, $_value_){
+        echo("<sok id='$_variable_'>$_value_</sok>");
+        echo"<script>documen­t.querySelector('#$_variable_').innerHTM­L = '$_value_';</­script>";
+        $GLOBALS[$_variable_­ = $_value_];
+        return $_value_;
+    }
+
+    function _get($_variable_){
+        $_value_ = "<script>document.wr­ite(document.querySe­lector('#$_variable_').innerHTML);</­script>";
+        $GLOBALS[$_variable_] = $_value_;
+        return $_value_;
+    }
+?>
+
+<script>
+    function _var($_variable_, $_value_){
+        document.write("<sok­ id='"+$_variable_+"­'>"+$_value_+"</­sok>");
+        document.querySelector("#"+$_variable_).innerHTML = $_value_;
+
+        window[$_variable_] = $_value_;
+        return $_value_;
+    }
+
+    function _get($_variable_){
+        $_value_ = document.querySelector("#"+$_variable_).innerHTML;
+        window[$_variable_] = $_value_;
+        return $_value_;
+    }
+</script>

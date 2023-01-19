@@ -1,0 +1,23 @@
+{
+  "name": "socket.js",
+  "version": "1.0.0",
+  "description": "Socket.js is a wide range Javascript library created with many functions of Javascript, that makes Javascript easier to use. Which connects PHP with Javascript. It was found since 2022.",
+  "type": "library",
+  "main": "socket.js",
+  "scripts": {
+      "test": "socket.js"
+  },
+  "keywords": [
+      "socket",
+      "socket.js",
+      "javascript",
+      "library",
+      "javascript library",
+      "javascript framework"
+  ],
+  "author": [
+    "Dave Conco",
+    "Kig's Emmanuel"
+  ],
+  "license": "ISC"
+}
