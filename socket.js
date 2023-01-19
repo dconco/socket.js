@@ -21,18 +21,11 @@ function _printIn(HTML_ELEMENT, message) {
 };
 
 class Select {
-    constructor(selector) {
-        this.selector = selector;
-        return document.querySelector(selector);
-    };
-
-};
-
-class SelectAll {
     constructor(selectors) {
-        const nodeList = document.querySelectorAll(selectors);
-        for (let i = 0; i < nodeList.length; i++) {
-            nodeList[i];
+        this.selectors = selectors;
+        let a = this.selectors.split(', ');
+        for (let i = 0; i < a.length; i++) {
+            return document.querySelector(a[i]);
         };
     };
 };
@@ -334,7 +327,7 @@ class Socket {
     };
 
     /* Remove the Event Handler */
-    rmEvent(type) {
+    _rmEvent(type) {
         const _nodeList_ = document.querySelectorAll(this.selector);
         try {
             for (let a = 0; a < _nodeList_.length; a++) {
@@ -346,7 +339,7 @@ class Socket {
     };
 
     /* Remove the full Event Handler */
-    removeEvents(types) {
+    _removeEvents(types) {
         const _nodeList_ = document.querySelectorAll(this.selector);
         try {
             if (types) {
@@ -583,7 +576,53 @@ class CONNECT {
 
     /* Form validation function */
     static VALIDATE(selector) {
+        try {
+            let a = document.querySelectorAll(selector);
+            for (let _i_ = 0; _i_ < a.length; _i_++) {
+                this.selector = a[_i_];
+            };
 
+            let b = selector ? this.selector.getAttribute("validate") : null;
+            if (b != null) {
+                validate();
+            } else {
+                throw new TypeError('Cannot get validate attribute.');
+            };
+
+            /* validate function */
+            function validate() {
+                let selector = CONNECT.selector;
+                let c = b.split('#');
+                console.log(c);
+
+                if (c.toString().match('numbers') && !c.toString().match('letters') && !c.toString().match('symbols')) {
+                    selector.addEventListener('keypress', function(e) {
+                        if (e.key.match(/[^0-9]/)) {
+                            e.preventDefault();
+                            return "The field should only contain Numbers.";
+                        };
+                    });
+                } else if (c.toString().match('letters') && !c.toString().match('numbers') && !c.toString().match('symbols')) {
+                    selector.addEventListener('keypress', function(e) {
+                        if (e.key.match(/[^A-Za-z]/)) {
+                            e.preventDefault();
+                            return "The field should only contain Letters.";
+                        };
+                    });
+                } else if (c.toString().match('symbols') && !c.toString().match('numbers') && !c.toString().match('letters')) {
+                    selector.addEventListener('keypress', function(e) {
+                        if (e.key.match(/[a-zA-Z0-9]/)) {
+                            e.preventDefault();
+                            return "The field should only contain Symbols.";
+                        };
+                    });
+                } else if (condition) {
+
+                }
+            };
+        } catch (error) {
+            console.error(`There was an uncaught ${error.name}: ${error.message}`);
+        };
     };
 };
 
@@ -1061,7 +1100,6 @@ function greet(time_format) {
 /* alert message box */
 function _alert(message) {
     this.message = message;
-    this.status = true;
 
     try {
         /* create the alert wrapper element */
@@ -1208,9 +1246,7 @@ function _alert(message) {
                 style1.visibility = "hidden";
             };
 
-            if (this.status == true) {
-                return true;
-            };
+            return ("true");
         });
 
         alertBtn.addEventListener('mouseout', () => {
@@ -1226,12 +1262,11 @@ function _alert(message) {
         console.error(`There was an uncaught ${error.name}: ${error.message}`);
     };
 };
-/* End alert dialog */
+/* // End alert dialog */
 
 /* confirm message box */
 function _confirm(message) {
     this.message = message;
-    this.status = '';
 
     try {
         /* create the confirm wrapper element */
@@ -1408,10 +1443,7 @@ function _confirm(message) {
                 style2.transform = "scale(0%)";
             };
 
-            this.status = true;
-            if (this.status == true) {
-                return true;
-            };
+            return ("true");
         });
 
         confirmBtn2.addEventListener('click', (e) => {
@@ -1422,10 +1454,7 @@ function _confirm(message) {
                 style2.transform = "scale(0%)";
             };
 
-            this.status = false;
-            if (this.status == false) {
-                return false;
-            };
+            return ("false");
         });
 
         confirmBtn.addEventListener('mouseout', () => {
@@ -1446,7 +1475,7 @@ function _confirm(message) {
         console.error(`There was an uncaught ${error.name}: ${error.message}`);
     };
 };
-/* End Confirm dialog */
+/* // End Confirm dialog */
 
 /* prompt message box */
 function _prompt(message, _default) {
@@ -1490,7 +1519,7 @@ function _prompt(message, _default) {
         promptPWrapper.append(promptP);
 
 
-        if (this.message == undefined || this.message == null || !message) {
+        if (message == undefined || message == null || !message) {
             promptP.innerText = "";
         } else {
             if (this.message.length > 700) {
@@ -1648,16 +1677,19 @@ function _prompt(message, _default) {
                 style2.transform = "scale(0%)";
             };
             console.log(input.value);
+            return (input.value);
         });
 
         promptBtn2.addEventListener('click', (e) => {
             e.preventDefault();
+            input.value = "null";
             if (promptWrapper.style.visibility != 'hidden') {
                 style1.opacity = "0";
                 style1.visibility = "hidden";
                 style2.transform = "scale(0%)";
             };
-            console.log(null);
+            console.log(input.value);
+            return (input.value);
         });
 
         promptBtn.addEventListener('mouseout', () => {
@@ -1678,15 +1710,14 @@ function _prompt(message, _default) {
         console.error(`There was an uncaught ${error.name}: ${error.message}`);
     };
 };
-/* End prompt dialog */
+/* // End prompt dialog */
 
 /* Export functions */
 function socket(selector) {
     this.selector = selector;
     return new Socket(this.selector);
 };
-const _select = (selector) => new Select(selector);
-const _selectAll = (selectors) => new SelectAll(selectors);
+const _select = (selectors) => new Select(selectors);
 const HTTP = new XMLHttpRequest;
 const current = () => CONNECT.tag;
 
